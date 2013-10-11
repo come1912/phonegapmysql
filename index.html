@@ -1,0 +1,111 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<meta charset="utf-8">
+<title>jQuery Mobile Web App</title>
+<link href="jquery.mobile.theme-1.0.min.css" rel="stylesheet" type="text/css"/>
+<link href="jquery.mobile.structure-1.0.min.css" rel="stylesheet" type="text/css"/>
+<script src="jquery-1.6.4.min.js" type="text/javascript"></script>
+<script src="jquery.mobile-1.0.min.js" type="text/javascript"></script>
+ <script src="post.js"></script>
+ <script>
+        function onBodyLoad() {		
+            document.addEventListener("deviceready",onDeviceReady,false);
+        }
+    </script>
+</head> 
+<body> 
+
+<div data-role="page" id="page">
+	<div data-role="header">
+		<h1>Test mysql</h1>
+	</div>
+	<div data-role="content">	
+		<ul data-role="listview">
+			<li><a href="#page2">commentaire</a></li>
+            <li><a href="#page3">Page Three</a></li>
+			<li><a href="#page4">Page Four</a></li>
+		</ul>		
+	</div>
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div>
+</div>
+
+<div data-role="page" id="page2">
+	<div data-role="header">
+		<h1>Laisser un commentaire</h1>
+	</div>
+	<div data-role="content">	
+		<div id="landmark-1" data-landmark-id="1">
+	<form>
+		<label for="email">
+			<b>Email</b>
+			<input type="email" id="email" name="email">
+		</label>
+
+		<label for="comment">
+			<b>Comment</b>
+			<textarea id="comment" name="comment" cols="30" rows="10"></textarea>
+		</label>
+		
+		<input type="submit" value="Save">
+	</form>
+</div>
+
+		
+	</div>
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div>
+</div>
+
+<div data-role="page" id="page3">
+	<div data-role="header">
+		<h1>Page Three</h1>
+	</div>
+	<div data-role="content">	
+		Content		
+	</div>
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div>
+</div>
+
+<div data-role="page" id="page4">
+	<div data-role="header">
+		<h1>Page Four</h1>
+	</div>
+	<div data-role="content">	
+		Content		
+	</div>
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div>
+</div>
+
+</body>
+<script>
+$('form').submit(function(){
+	var landmarkID = $(this).parent().attr('data-landmark-id');
+	var postData = $(this).serialize();
+	
+	$.ajax({
+		type: 'POST',
+		data: postData+'&amp;lid='+landmarkID,
+		url: 'localhost/save.php',
+		success: function(data){
+			console.log(data);
+			alert('Your comment was successfully added');
+		},
+		error: function(){
+			console.log(data);
+			alert('There was an error adding your comment');
+		}
+	});
+	
+	return false;
+});
+
+</script>
+</html>
